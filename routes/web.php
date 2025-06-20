@@ -26,6 +26,10 @@ Route::get('/kamar', function () {
     return Inertia::render('Admin/Kamar/Index');
 })->name('kamar.index');
 
+Route::get('/create-doctor', function () {
+    return Inertia::render('Admin/Dokter/Create');
+})->name('dokter.create');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
