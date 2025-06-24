@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Head } from "@inertiajs/react";
 
-export default function index() {
+export default function Index() {
     return (
         <DashboardLayout>
             <Head title="Data Kamar" />

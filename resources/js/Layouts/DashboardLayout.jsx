@@ -34,7 +34,7 @@ const NAVIGATION = [
     {
         title: "Data Dokter",
         icon: <PeopleIcon />,
-        path: "/dokter",
+        path: "/doctor",
     },
     {
         title: "Data Pasien",
@@ -53,7 +53,6 @@ const theme = createTheme();
 export default function DashboardLayout({ children }) {
     const currentPath = usePage().url; // ← ini penting
     const [open, setOpen] = React.useState(true);
-
     const toggleDrawer = () => {
         setOpen(!open);
     };

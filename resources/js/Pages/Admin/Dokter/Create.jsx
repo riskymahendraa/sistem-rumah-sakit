@@ -8,10 +8,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Button from "@mui/material/Button";
+import { router } from "@inertiajs/react";
 import { useForm } from "@inertiajs/react";
 import { Head } from "@inertiajs/react";
 
-export default function create() {
+export default function Create() {
     const { data, setData, post, processing, errors } = useForm({
         str: "",
         nama: "",
@@ -23,7 +24,10 @@ export default function create() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("/create-doctor"));
+        post(route("doctor.store")),
+            {
+                onSuccess: () => router.visit(route("doctor.index")),
+            };
     };
 
     return (
@@ -38,7 +42,7 @@ export default function create() {
                     </Box>
                 </Grid>
             </Grid>
-            <form action="/create-doctor" method="POST">
+            <form onSubmit={handleSubmit}>
                 <div className="max-w-4xl px-4 my-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
@@ -155,14 +159,14 @@ export default function create() {
                                     }
                                 >
                                     <FormControlLabel
-                                        value="pria"
+                                        value="Laki-laki"
                                         control={<Radio />}
-                                        label="Pria"
+                                        label="Laki-laki"
                                     />
                                     <FormControlLabel
-                                        value="perempuan"
+                                        value="Perempuan"
                                         control={<Radio />}
-                                        label="Wanita"
+                                        label="Perempuan"
                                     />
                                 </RadioGroup>
                             </FormControl>
@@ -171,8 +175,8 @@ export default function create() {
                     <div className="flex items-center justify-end mt-4">
                         <div className="hover:scale-105 transition-transform duration-300 ease-in-out hover:bg-blue-600 hover:rounded">
                             <Button
+                                type="submit"
                                 variant="contained"
-                                onClick={handleSubmit}
                                 disabled={processing}
                             >
                                 {processing ? "Mengirim..." : "Submit"}
