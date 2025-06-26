@@ -24,10 +24,7 @@ export default function Create() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("doctor.store")),
-            {
-                onSuccess: () => router.visit(route("doctor.index")),
-            };
+        post(route("doctor.store"));
     };
 
     return (
@@ -59,8 +56,13 @@ export default function Create() {
                                 value={data.str}
                                 onChange={(e) => setData("str", e.target.value)}
                                 placeholder="Masukkan STR 16 Digit"
-                                className="block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                                className={`block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${errors.str ? "border-red-500" : "border-gray-200"}`}
                             />
+                            {errors.str && (
+                                <p className="text-red-500 text-xs mt-1">
+                                    {errors.str}
+                                </p>
+                            )}
                         </div>
                         <div>
                             <label
@@ -78,8 +80,13 @@ export default function Create() {
                                     setData("nama", e.target.value)
                                 }
                                 placeholder="Nama Lengkap"
-                                className="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                className={`block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${errors.nama ? "border-red-500" : "border-gray-200"}`}
                             />
+                            {errors.nama && (
+                                <p className="text-red-500 text-xs mt-1">
+                                    {errors.nama}
+                                </p>
+                            )}
                         </div>
                         <div className="md:col-span-2">
                             <label
@@ -97,8 +104,13 @@ export default function Create() {
                                     setData("alamat", e.target.value)
                                 }
                                 placeholder="Masukkan Alamat"
-                                className="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                className={`block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${errors.alamat ? "border-red-500" : "border-gray-200"}`}
                             />
+                            {errors.alamat && (
+                                <p className="text-red-500 text-xs mt-1">
+                                    {errors.alamat}
+                                </p>
+                            )}
                         </div>
                         <div>
                             <div>
@@ -118,8 +130,13 @@ export default function Create() {
                                         setData("spesialis", e.target.value)
                                     }
                                     placeholder="Masukkan Spesialis Dokter"
-                                    className="block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                                    className={`block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${errors.spesialis ? "border-red-500" : "border-gray-200"}`}
                                 />
+                                {errors.spesialis && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.spesialis}
+                                    </p>
+                                )}
                             </div>
                         </div>
                         <div>
@@ -140,12 +157,20 @@ export default function Create() {
                                         setData("phone", e.target.value)
                                     }
                                     placeholder="Masukkan No. Telepon"
-                                    className="block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                                    className={`block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${errors.phone ? "border-red-500" : "border-gray-200"}`}
                                 />
+                                {errors.phone && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.phone}
+                                    </p>
+                                )}
                             </div>
                         </div>
                         <div className="md:col-span-2">
-                            <FormControl>
+                            <FormControl
+                                component={"fieldset"}
+                                error={Boolean(errors.jenis_kelamin)}
+                            >
                                 <FormLabel id="demo-row-radio-buttons-group-label">
                                     Jenis Kelamin
                                 </FormLabel>
@@ -169,6 +194,11 @@ export default function Create() {
                                         label="Perempuan"
                                     />
                                 </RadioGroup>
+                                {errors.jenis_kelamin && (
+                                    <p className="text-red-500 text-xs mt-1">
+                                        {errors.jenis_kelamin}
+                                    </p>
+                                )}
                             </FormControl>
                         </div>
                     </div>

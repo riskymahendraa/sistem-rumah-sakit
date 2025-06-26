@@ -28,17 +28,19 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = $request->validate([
-            'str' => 'required|max:16',
-            'nama' => 'required|string|max:255',
-            'jenis_kelamin' => 'required',
-            'phone' => 'required|max:16',
-            'alamat' => 'required|string|max:255',
-            'spesialis' => 'required|string|max:255',
-        ]);
+        $validated = $request->validate([
+        'str' => 'required|min:16|max:16',
+        'nama' => 'required|string|max:255',
+        'jenis_kelamin' => 'required',
+        'phone' => 'required|max:16',
+        'alamat' => 'required|string|max:255',
+        'spesialis' => 'required|string|max:255',
+    ]);
 
-        $dokter = Doctor::create($validate);
-        return redirect()->route('doctor.index')->with('success', 'Dokter berhasil ditambahkan');
+    Doctor::create($validated);
+
+    return redirect()->route('doctor.index')->with('success', 'Data Dokter Berhasil Ditambahkan');
+
     }
 
     /**
