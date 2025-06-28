@@ -15,11 +15,13 @@ Route::get('/', function () {
     ]);
 });
 
+// route CRUD doctor
 Route::get('/doctor',[DoctorController::class,'index'])->name('doctor.index');
-
 Route::get('/create-doctor', [DoctorController::class,'create'])->name('doctor.create');
-
 Route::post('/doctor', [DoctorController::class,'store'])->name('doctor.store');
+route::get('/show-doctor/{id}', [DoctorController::class,'show'])->name('doctor.show');
+
+
 
 Route::get('/pasien', function () {
     return Inertia::render('Admin/Pasien/Index');

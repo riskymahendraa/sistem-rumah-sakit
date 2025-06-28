@@ -12,7 +12,10 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Dokter/Index');
+        $doctors = Doctor::all();
+        return Inertia::render('Admin/Dokter/Index', [
+            'doctors' => $doctors
+        ]);
     }
 
     /**
@@ -46,15 +49,15 @@ class DoctorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Dokter $dokter)
+    public function show(Doctor $doctor)
     {
-        //
+        return Inertia::render('Admin/Dokter/Show');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Dokter $dokter)
+    public function edit(Doctor $doctor)
     {
         //
     }
@@ -62,7 +65,7 @@ class DoctorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Dokter $dokter)
+    public function update(Request $request, Doctor $doctor)
     {
         //
     }
@@ -70,7 +73,7 @@ class DoctorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dokter $dokter)
+    public function destroy(Doctor $doctor)
     {
         //
     }
