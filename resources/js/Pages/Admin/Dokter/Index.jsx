@@ -4,12 +4,10 @@ import Box from "@mui/material/Box";
 import AddIcon from "@mui/icons-material/Add";
 import Paper from "@mui/material/Paper";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import SearchIcon from "@mui/icons-material/Search";
 import { DataGrid } from "@mui/x-data-grid";
 import { usePage, router, Head } from "@inertiajs/react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { Button } from "@mui/material";
 
 export default function Index() {
     const { flash } = usePage().props;
