@@ -202,7 +202,17 @@ export default function Create() {
                             </FormControl>
                         </div>
                     </div>
-                    <div className="flex items-center justify-end mt-4">
+                    <div className="flex items-center space-x-2 justify-end mt-4">
+                        <div className="hover:scale-105 transition-transform duration-300 ease-in-out hover:bg-blue-600 hover:rounded">
+                            <Button
+                                onClick={() =>
+                                    router.visit(route("doctor.index"))
+                                }
+                                variant="contained"
+                            >
+                                Kembali
+                            </Button>
+                        </div>
                         <div className="hover:scale-105 transition-transform duration-300 ease-in-out hover:bg-blue-600 hover:rounded">
                             <Button
                                 type="submit"
