@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import Box from "@mui/material/Box";
 import AddIcon from "@mui/icons-material/Add";
@@ -11,8 +11,18 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 export default function Index() {
     const { flash } = usePage().props;
-
+    const [message, setMessage] = useState(flash.success || null);
     const { doctors } = usePage().props;
+
+    useEffect(() => {
+        if (message) {
+            const timeout = setTimeout(() => {
+                setMessage(null);
+            }, 3000); // ⏱️ 3 detik
+
+            return () => clearTimeout(timeout); // Bersihkan timer saat unmount
+        }
+    }, [message]);
 
     const handleEdit = (row) => {
         router.visit(route("doctor.edit", row.id));
@@ -110,9 +120,9 @@ export default function Index() {
                         className="border border-gray-300 rounded-md px-4 py-2"
                     />{" "}
                 </div>
-                {flash?.success && (
-                    <div className="bg-green-100 text-green-700 p-3 w-full rounded mb-4">
-                        {flash.success}
+                {message && (
+                    <div className="bg-green-100 text-green-800 px-4 py-3 rounded mb-4 transition-opacity duration-500">
+                        {message}
                     </div>
                 )}
 

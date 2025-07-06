@@ -12,9 +12,9 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors = Doctor::all();
         return Inertia::render('Admin/Dokter/Index', [
-            'doctors' => $doctors
+            'doctors' => Doctor::all(), // atau sesuai kebutuhan
+            'success' => session('success') // untuk menampilkan pesan sukses
         ]);
     }
 
@@ -61,7 +61,9 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        //
+        return Inertia::render('Admin/Dokter/Edit', [
+            'doctor' => $doctor
+        ]);
     }
 
     /**
@@ -69,7 +71,18 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
-        //
+        $validated = $request->validate([
+        'str' => 'required|min:16|max:16',
+        'nama' => 'required|string|max:255',
+        'jenis_kelamin' => 'required',
+        'phone' => 'required|max:16',
+        'alamat' => 'required|string|max:255',
+        'spesialis' => 'required|string|max:255',
+    ]);
+    
+
+    $doctor->update($validated);
+    return redirect()->route('doctor.index')->with('success', 'Data Dokter Berhasil Diubah');
     }
 
     /**
