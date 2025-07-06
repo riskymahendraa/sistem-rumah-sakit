@@ -90,6 +90,10 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor)
     {
-        //
+        try { $doctor->delete();
+        return redirect()->route('doctor.index')->with('success', 'Data Dokter Berhasil Dihapus');
+        } catch (\Exception $e) {
+            return redirect()->route('doctor.index')->with('error', 'Data Dokter Gagal Dihapus');
+        };
     }
 }

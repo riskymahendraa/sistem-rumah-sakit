@@ -23,8 +23,11 @@ Route::get('doctor', [DoctorController::class, 'index'])->name('doctor.index');
 Route::get('doctor/create', [DoctorController::class, 'create'])->name('doctor.create');
 Route::post('doctor', [DoctorController::class, 'store'])->name('doctor.store');
 Route::get('doctor/{doctor}/edit', [DoctorController::class, 'edit'])->name('doctor.edit');
+Route::get('doctor/{doctor}', [DoctorController::class, 'show'])->name('doctor.show');
 Route::put('doctor/{doctor}', [DoctorController::class, 'update'])->name('doctor.update');
 Route::delete('doctor/{doctor}', [DoctorController::class, 'destroy'])->name('doctor.destroy');
+
+
 
 
 
