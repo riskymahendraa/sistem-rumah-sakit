@@ -39,12 +39,12 @@ const NAVIGATION = [
     {
         title: "Data Pasien",
         icon: <AccessibleIcon />,
-        path: "/pasien",
+        path: "/patient",
     },
     {
-        title: "Data Kamar",
+        title: "Data Ruangan",
         icon: <MeetingRoomIcon />,
-        path: "/kamar",
+        path: "/room",
     },
 ];
 

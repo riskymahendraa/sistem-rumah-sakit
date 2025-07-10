@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\RoomController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -28,16 +29,17 @@ Route::put('doctor/{doctor}', [DoctorController::class, 'update'])->name('doctor
 Route::delete('doctor/{doctor}', [DoctorController::class, 'destroy'])->name('doctor.destroy');
 
 
-
+Route::get('room', [RoomController::class, 'index'])->name('room.index');
+Route::get('room/create', [RoomController::class, 'create'])->name('room.create');
+Route::post('room', [RoomController::class, 'store'])->name('room.store');
+Route::get('room/{room}/edit', [RoomController::class, 'edit'])->name('room.edit');
+Route::put('room/{room}', [RoomController::class, 'update'])->name('room.update');
 
 
 Route::get('/pasien', function () {
     return Inertia::render('Admin/Pasien/Index');
 })->name('pasien.index');
 
-Route::get('/kamar', function () {
-    return Inertia::render('Admin/Kamar/Index');
-})->name('kamar.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

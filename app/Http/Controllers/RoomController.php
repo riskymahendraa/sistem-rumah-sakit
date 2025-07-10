@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Inertia\Inertia;
+use App\Models\Doctor;
 use App\Models\Room;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,10 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Admin/Kamar/Index', [
+            'rooms' => Room::all(), // atau sesuai kebutuhan
+            'success' => session('success') // untuk menampilkan pesan sukses
+        ]);
     }
 
     /**
@@ -20,7 +24,7 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Kamar/Create');
     }
 
     /**
@@ -28,13 +32,24 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'type' => 'required|string',
+        'bed_count' => 'required|integer|min:1',
+        'class' => 'required|string',
+    ]);
+    $validated['available_beds'] = $validated['bed_count'];
+
+    Room::create($validated);
+    
+    return redirect()->route('room.index')->with('success', 'Data Kamar Berhasil Ditambahkan');
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Kamar $kamar)
+    public function show(Room $room)
     {
         //
     }
@@ -42,23 +57,35 @@ class RoomController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kamar $kamar)
+    public function edit(Room $room)
     {
-        //
+        return Inertia::render('Admin/Kamar/Edit', [
+            'room' => $room
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kamar $kamar)
-    {
-        //
-    }
+    public function update(Request $request, Room $room)
+{
+    $validated = $request->validate([
+        'name' => 'required|string',
+        'type' => 'required|string',
+        'class' => 'required|string',
+        'bed_count' => 'required|integer|min:1',
+    ]);
+
+    $room->update($validated);
+
+    return redirect()->route('room.index')->with('success', 'Kamar berhasil diupdate');
+}
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kamar $kamar)
+    public function destroy(Room $room)
     {
         //
     }
