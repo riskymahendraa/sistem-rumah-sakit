@@ -2,6 +2,7 @@ import * as React from "react";
 import {
     AppBar,
     Box,
+    Button,
     CssBaseline,
     Divider,
     Drawer,
@@ -88,7 +89,7 @@ export default function DashboardLayout({ children }) {
                             <div>Hello, Admin</div>
                             <button
                                 onClick={() => router.post("/logout")}
-                                className="bg-red-100 hover:bg-red-300 text-red-600 font-semibold px-2 py-1 text-sm rounded-full transition-all"
+                                className="text-white-600 font-semibold px-2 py-1 text-sm rounded-full hover:bg-red-200 hover:text-red-500 transition-all ease-in-out duration-300"
                             >
                                 <LogoutIcon /> Logout
                             </button>
