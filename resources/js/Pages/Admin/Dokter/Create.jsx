@@ -27,6 +27,13 @@ export default function Create() {
         post(route("doctor.store"));
     };
 
+    const handleChange = (e) => {
+        const value = e.target.value;
+        if (value.length <= 16) {
+            setData((prev) => ({ ...prev, str: value }));
+        }
+    };
+
     return (
         <DashboardLayout>
             <Head title="Tambah Data Dokter" />
@@ -54,10 +61,13 @@ export default function Create() {
                                 name="str"
                                 type="text"
                                 value={data.str}
-                                onChange={(e) => setData("str", e.target.value)}
+                                onChange={handleChange}
                                 placeholder="Masukkan STR 16 Digit"
                                 className={`block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white ${errors.str ? "border-red-500" : "border-gray-200"}`}
                             />
+                            <span className={"text-gray-500 text-xs"}>
+                                {data.str.length} / 16
+                            </span>
                             {errors.str && (
                                 <p className="text-red-500 text-xs mt-1">
                                     {errors.str}
