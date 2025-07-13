@@ -51,7 +51,9 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        //
+        return Inertia::render('Admin/Kamar/Show', [
+            'room' => $room
+        ]);
     }
 
     /**
@@ -87,6 +89,10 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        //
+        try { $room->delete();
+        return redirect()->route('room.index')->with('success', 'Data Kamar Berhasil Dihapus');
+        } catch (\Exception $e) {
+            return redirect()->route('room.index')->with('error', 'Data Kamar Gagal Dihapus');
+        };
     }
 }

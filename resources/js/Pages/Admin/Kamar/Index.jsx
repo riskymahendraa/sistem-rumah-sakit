@@ -68,7 +68,7 @@ export default function Index() {
     };
 
     const handleShow = (row) => {
-        router.visit(route("doctor.show", row.id));
+        router.visit(route("room.show", row.id));
     };
 
     // Open delete confirmation dialog
@@ -76,7 +76,7 @@ export default function Index() {
         setDeleteDialog({
             open: true,
             roomId: row.id,
-            roomName: row.fullName,
+            roomName: row.name,
             loading: false,
         });
     };
@@ -97,7 +97,7 @@ export default function Index() {
     const handleDeleteConfirm = () => {
         setDeleteDialog((prev) => ({ ...prev, loading: true }));
         router.post(
-            route("doctor.destroy", deleteDialog.roomId),
+            route("room.destroy", deleteDialog.roomId),
             {
                 _method: "DELETE",
             },

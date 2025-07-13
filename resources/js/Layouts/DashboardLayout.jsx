@@ -42,7 +42,7 @@ const NAVIGATION = [
         path: "/patient",
     },
     {
-        title: "Data Ruangan",
+        title: "Data Kamar",
         icon: <MeetingRoomIcon />,
         path: "/room",
     },

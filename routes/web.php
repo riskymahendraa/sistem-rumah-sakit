@@ -34,6 +34,8 @@ Route::get('room/create', [RoomController::class, 'create'])->name('room.create'
 Route::post('room', [RoomController::class, 'store'])->name('room.store');
 Route::get('room/{room}/edit', [RoomController::class, 'edit'])->name('room.edit');
 Route::put('room/{room}', [RoomController::class, 'update'])->name('room.update');
+Route::get('room/{room}', [RoomController::class, 'show'])->name('room.show');
+Route::delete('room/{room}', [RoomController::class, 'destroy'])->name('room.destroy');
 
 
 Route::get('/pasien', function () {
