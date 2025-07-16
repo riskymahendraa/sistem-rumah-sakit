@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\PatientController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -38,9 +39,7 @@ Route::get('room/{room}', [RoomController::class, 'show'])->name('room.show');
 Route::delete('room/{room}', [RoomController::class, 'destroy'])->name('room.destroy');
 
 
-Route::get('/pasien', function () {
-    return Inertia::render('Admin/Pasien/Index');
-})->name('pasien.index');
+Route::get('patient', [PatientController::class, 'index'])->name('patient.index');
 
 
 Route::middleware('auth')->group(function () {

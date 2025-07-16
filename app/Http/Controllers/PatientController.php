@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Inertia\Inertia;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
@@ -12,7 +12,10 @@ class PatientController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Admin/Pasien/Index', [
+            'patients' => Patient::all(), // atau sesuai kebutuhan
+            'success' => session('success') // untuk menampilkan pesan sukses
+        ]);
     }
 
     /**
@@ -34,7 +37,7 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pasien $pasien)
+    public function show(Patient $patient)
     {
         //
     }
@@ -42,7 +45,7 @@ class PatientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pasien $pasien)
+    public function edit(Patient $patient)
     {
         //
     }
@@ -50,7 +53,7 @@ class PatientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pasien $pasien)
+    public function update(Request $request, Patient $patient)
     {
         //
     }
