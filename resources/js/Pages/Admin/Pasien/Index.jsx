@@ -204,7 +204,7 @@ export default function Index() {
 
     return (
         <DashboardLayout>
-            <Head title="Data Dokter" />
+            <Head title="Data Pasien" />
             <Box className="max-w-full mx-auto px-4 py-6">
                 <div className="font-bold text-2xl mb-4">Data Pasien</div>
 

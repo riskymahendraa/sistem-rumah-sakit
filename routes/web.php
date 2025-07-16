@@ -40,6 +40,7 @@ Route::delete('room/{room}', [RoomController::class, 'destroy'])->name('room.des
 
 
 Route::get('patient', [PatientController::class, 'index'])->name('patient.index');
+Route::get('patient/create', [PatientController::class, 'create'])->name('patient.create');
 
 
 Route::middleware('auth')->group(function () {
