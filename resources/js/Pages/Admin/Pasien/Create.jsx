@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useRef } from "react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -13,18 +14,54 @@ import MenuItem from "@mui/material/MenuItem";
 import { router } from "@inertiajs/react";
 import { useForm } from "@inertiajs/react";
 import { Head } from "@inertiajs/react";
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Typography,
+    TextField,
+    List,
+    ListItem,
+    ListItemText,
+} from "@mui/material";
 
-export default function Create() {
+export default function Create({ doctors, rooms }) {
+    const [selectedDoctor, setSelectedDoctor] = useState(null);
+    const [selectedRoom, setSelectedRoom] = useState(null);
     const { data, setData, post, processing, errors } = useForm({
         nama: "",
         nik: "",
         alamat: "",
         phone: "",
         jenis_kelamin: "",
-        spesialis: "",
-        doctors_id: null,
-        rooms_id: null,
+        doctors_id: selectedDoctor?.id || null,
+        rooms_id: selectedRoom?.id || null,
     });
+
+    const [openModal, setOpenModal] = useState(false);
+    const [openRoomModal, setOpenRoomModal] = useState(false);
+    const inputRef = useRef(null);
+    setTimeout(() => {
+        inputRef.current?.blur();
+    }, 50);
+
+    const handleSelectDoctor = (doctor) => {
+        setSelectedDoctor(doctor);
+        setData((prev) => ({
+            ...prev,
+            doctors_id: doctor.id,
+        }));
+        setOpenModal(false);
+    };
+    const handleSelectRoom = (room) => {
+        setSelectedRoom(room);
+        setData((prev) => ({
+            ...prev,
+            rooms_id: room.id,
+        }));
+        setOpenRoomModal(false);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -127,93 +164,188 @@ export default function Create() {
                             )}
                         </div>
                         <div>
-                            <FormControl className="w-full">
-                                <Select
-                                    name="type"
-                                    value={data.type || ""}
-                                    onChange={(e) => {
-                                        const selected = e.target.value;
-                                        lastSelectedType.current = selected;
-                                        setData("type", selected);
-                                        setOpenedType(false);
+                            <Box sx={{ mb: 2 }}>
+                                <TextField
+                                    label="Pilih Dokter"
+                                    value={
+                                        selectedDoctor
+                                            ? selectedDoctor.nama
+                                            : ""
+                                    }
+                                    onClick={() => setOpenModal(true)}
+                                    fullWidth
+                                    inputRef={inputRef}
+                                    InputProps={{
+                                        readOnly: true,
                                     }}
-                                    onOpen={() => {
-                                        setOpenedType(true);
-                                        lastSelectedType.current = null; // reset setiap kali dibuka
-                                    }}
-                                    onClose={() => {
-                                        if (
-                                            openedType &&
-                                            lastSelectedType.current === null
-                                        ) {
-                                            setData("type", ""); // reset hanya jika tidak ada yang dipilih
-                                        }
-                                        setOpenedType(false);
-                                    }}
-                                    displayEmpty
-                                    renderValue={(selected) => {
-                                        if (!selected) {
-                                            return (
-                                                <span className="text-gray-400">
-                                                    Pilih Dokter
-                                                </span>
-                                            );
-                                        }
-                                        return selected;
-                                    }}
-                                >
-                                    <MenuItem value="ICU">ICU</MenuItem>
-                                    <MenuItem value="Rawat Inap">
-                                        Rawat Inap
-                                    </MenuItem>
-                                    <MenuItem value="UGD">UGD</MenuItem>
-                                </Select>
-                            </FormControl>
+                                />
+                            </Box>
+                            <Dialog
+                                open={openModal}
+                                onClose={() => setOpenModal(false)}
+                                fullWidth
+                                maxWidth="sm"
+                            >
+                                <DialogTitle>Daftar Dokter</DialogTitle>
+                                <DialogContent dividers>
+                                    <List>
+                                        {doctors.map((doctor) => (
+                                            <ListItem
+                                                key={doctor.id}
+                                                divider
+                                                sx={{
+                                                    display: "flex",
+                                                    justifyContent:
+                                                        "space-between",
+                                                }}
+                                            >
+                                                <ListItemText
+                                                    primary={
+                                                        <strong>
+                                                            {doctor.nama}
+                                                        </strong>
+                                                    }
+                                                    secondary={
+                                                        <>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body2"
+                                                            >
+                                                                <strong>
+                                                                    Spesialis:
+                                                                </strong>{" "}
+                                                                {
+                                                                    doctor.spesialis
+                                                                }
+                                                            </Typography>
+                                                            <br />
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body2"
+                                                            >
+                                                                <strong>
+                                                                    No HP:
+                                                                </strong>{" "}
+                                                                {doctor.no_hp}
+                                                            </Typography>
+                                                        </>
+                                                    }
+                                                />
+                                                <Button
+                                                    variant="contained"
+                                                    onClick={() =>
+                                                        handleSelectDoctor(
+                                                            doctor,
+                                                        )
+                                                    }
+                                                >
+                                                    Pilih
+                                                </Button>
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button
+                                        onClick={() => setOpenModal(false)}
+                                        variant="outlined"
+                                    >
+                                        Tutup
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
                         </div>
                         <div>
-                            <FormControl className="w-full">
-                                <Select
-                                    name="type"
-                                    value={data.type || ""}
-                                    onChange={(e) => {
-                                        const selected = e.target.value;
-                                        lastSelectedType.current = selected;
-                                        setData("type", selected);
-                                        setOpenedType(false);
+                            <Box sx={{ mb: 2 }}>
+                                <TextField
+                                    label="Pilih Kamar"
+                                    value={
+                                        selectedRoom ? selectedRoom.name : ""
+                                    }
+                                    onClick={() => setOpenRoomModal(true)}
+                                    fullWidth
+                                    inputRef={inputRef}
+                                    InputProps={{
+                                        readOnly: true,
                                     }}
-                                    onOpen={() => {
-                                        setOpenedType(true);
-                                        lastSelectedType.current = null; // reset setiap kali dibuka
-                                    }}
-                                    onClose={() => {
-                                        if (
-                                            openedType &&
-                                            lastSelectedType.current === null
-                                        ) {
-                                            setData("type", ""); // reset hanya jika tidak ada yang dipilih
-                                        }
-                                        setOpenedType(false);
-                                    }}
-                                    displayEmpty
-                                    renderValue={(selected) => {
-                                        if (!selected) {
-                                            return (
-                                                <span className="text-gray-400">
-                                                    Pilih Kamar
-                                                </span>
-                                            );
-                                        }
-                                        return selected;
-                                    }}
-                                >
-                                    <MenuItem value="ICU">ICU</MenuItem>
-                                    <MenuItem value="Rawat Inap">
-                                        Rawat Inap
-                                    </MenuItem>
-                                    <MenuItem value="UGD">UGD</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </div>
+                                />
+                            </Box>
+                            <Dialog
+                                open={openRoomModal}
+                                onClose={() => setOpenRoomModal(false)}
+                                fullWidth
+                                maxWidth="sm"
+                            >
+                                <DialogTitle>Daftar Kamar</DialogTitle>
+                                <DialogContent dividers>
+                                    <List>
+                                        {rooms.map((room) => (
+                                            <ListItem
+                                                key={room.id}
+                                                divider
+                                                sx={{
+                                                    display: "flex",
+                                                    justifyContent:
+                                                        "space-between",
+                                                }}
+                                            >
+                                                <ListItemText
+                                                    primary={
+                                                        <strong>
+                                                            {room.name}
+                                                        </strong>
+                                                    }
+                                                    secondary={
+                                                        <>
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body2"
+                                                            >
+                                                                <strong>
+                                                                    Tipe Kamar:
+                                                                </strong>{" "}
+                                                                {room.class}
+                                                            </Typography>
+                                                            <br />
+                                                            <Typography
+                                                                component="span"
+                                                                variant="body2"
+                                                            >
+                                                                <strong>
+                                                                    Kapsitas
+                                                                    Tersedia:
+                                                                </strong>{" "}
+                                                                {
+                                                                    room.available_beds
+                                                                }{" "}
+                                                                /{" "}
+                                                                {room.bed_count}
+                                                            </Typography>
+                                                        </>
+                                                    }
+                                                />
+                                                <Button
+                                                    variant="contained"
+                                                    onClick={() =>
+                                                        handleSelectRoom(room)
+                                                    }
+                                                >
+                                                    Pilih
+                                                </Button>
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button
+                                        onClick={() => setOpenRoomModal(false)}
+                                        variant="outlined"
+                                    >
+                                        Tutup
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+                        </div>{" "}
                         <div className="w-full">
                             <label
                                 htmlFor="phone"

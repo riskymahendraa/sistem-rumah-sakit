@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Patient;
+use App\Models\Doctor;
+use App\Models\Room;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -23,7 +25,10 @@ class PatientController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Pasien/Create');
+        return Inertia::render('Admin/Pasien/Create', [
+            'doctors' => Doctor::all(), 
+            'rooms' => Room::all()
+        ]);
     }
 
     /**
@@ -31,7 +36,18 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'nik' => 'required|string|max:16',
+            'phone' => 'required|string|max:16',
+            'alamat' => 'required|string|max:255',
+            'doctors_id' => 'required|exists:doctors,id',
+            'rooms_id' => 'required|exists:rooms,id',
+            'jenis_kelamin' => 'required',
+        ]);
+        
+        Patient::create($validated);
+        return redirect()->route('patient.index')->with('success', 'Data Pasien Berhasil Ditambahkan');
     }
 
     /**
