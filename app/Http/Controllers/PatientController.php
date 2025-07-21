@@ -14,8 +14,9 @@ class PatientController extends Controller
      */
     public function index()
     {
+        $patients = Patient::with('doctor', 'room')->get();
         return Inertia::render('Admin/Pasien/Index', [
-            'patients' => Patient::all(), // atau sesuai kebutuhan
+            'patients' => $patients,// atau sesuai kebutuhan
             'success' => session('success') // untuk menampilkan pesan sukses
         ]);
     }

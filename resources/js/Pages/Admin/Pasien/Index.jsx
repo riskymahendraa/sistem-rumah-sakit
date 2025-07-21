@@ -24,7 +24,7 @@ export default function Index() {
     const { flash } = usePage().props;
     const [message, setMessage] = useState(flash.success || null);
     const [errorMessage, setErrorMessage] = useState(flash.error || null);
-    const { doctors } = usePage().props;
+    const { patients } = usePage().props;
 
     // State untuk delete confirmation
     const [deleteDialog, setDeleteDialog] = useState({
@@ -137,7 +137,7 @@ export default function Index() {
 
     const columns = [
         { field: "no", headerName: "NO", flex: 1 },
-        { field: "noStr", headerName: "NO. STR", flex: 1 },
+        { field: "nik", headerName: "NIK", flex: 1 },
         {
             field: "fullName",
             headerName: "Nama Lengkap",
@@ -149,8 +149,15 @@ export default function Index() {
             flex: 1,
         },
         {
-            field: "spesialis",
-            headerName: "Jabatan",
+            field: "doctorName",
+            headerName: "Dokter",
+            flex: 1,
+            align: "left",
+            headerAlign: "left",
+        },
+        {
+            field: "roomName",
+            headerName: "Kamar",
             flex: 1,
             align: "left",
             headerAlign: "left",
@@ -193,14 +200,15 @@ export default function Index() {
         pageSize: 5,
     });
 
-    // const rows = doctors.map((doctor, index) => ({
-    //     id: doctor.id,
-    //     no: index + 1,
-    //     fullName: doctor.nama,
-    //     noStr: doctor.str,
-    //     address: doctor.alamat,
-    //     spesialis: doctor.spesialis,
-    // }));
+    const rows = patients.map((patient, index) => ({
+        id: patient.id,
+        no: index + 1,
+        fullName: patient.nama,
+        nik: patient.nik,
+        address: patient.alamat,
+        doctorName: patient.doctor?.nama || "-",
+        roomName: patient.room?.name || "-",
+    }));
 
     return (
         <DashboardLayout>
@@ -222,7 +230,7 @@ export default function Index() {
                     />
                 </div>
 
-                {/* <Paper sx={{ width: "100%" }}>
+                <Paper sx={{ width: "100%" }}>
                     <DataGrid
                         rows={rows}
                         columns={columns}
@@ -232,10 +240,10 @@ export default function Index() {
                         autoHeight
                         sx={{ border: 0 }}
                     />
-                </Paper> */}
+                </Paper>
 
                 {/* Delete Confirmation Dialog */}
-                {/* <Dialog
+                <Dialog
                     open={deleteDialog.open}
                     onClose={handleDeleteCancel}
                     maxWidth="sm"
@@ -274,10 +282,10 @@ export default function Index() {
                             {deleteDialog.loading ? "Menghapus..." : "Hapus"}
                         </Button>
                     </DialogActions>
-                </Dialog> */}
+                </Dialog>
 
                 {/* Snackbar for notifications */}
-                {/* <Snackbar
+                <Snackbar
                     open={snackbar.open}
                     autoHideDuration={4000}
                     onClose={handleCloseSnackbar}
@@ -290,7 +298,7 @@ export default function Index() {
                     >
                         {snackbar.message}
                     </Alert>
-                </Snackbar> */}
+                </Snackbar>
             </Box>
         </DashboardLayout>
     );
