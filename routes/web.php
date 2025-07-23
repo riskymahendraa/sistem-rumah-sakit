@@ -42,6 +42,9 @@ Route::delete('room/{room}', [RoomController::class, 'destroy'])->name('room.des
 Route::get('patient', [PatientController::class, 'index'])->name('patient.index');
 Route::get('patient/create', [PatientController::class, 'create'])->name('patient.create');
 Route::post('patient', [PatientController::class, 'store'])->name('patient.store');
+Route::get('patient/{patient}/edit', [PatientController::class, 'edit'])->name('patient.edit');
+Route::put('patient/{patient}', [PatientController::class, 'update'])->name('patient.update');
+
 
 
 Route::middleware('auth')->group(function () {

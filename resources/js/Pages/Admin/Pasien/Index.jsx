@@ -64,11 +64,11 @@ export default function Index() {
     }, [errorMessage]);
 
     const handleEdit = (row) => {
-        router.visit(route("doctor.edit", row.id));
+        router.visit(route("patient.edit", row.id));
     };
 
     const handleShow = (row) => {
-        router.visit(route("doctor.show", row.id));
+        router.visit(route("patient.show", row.id));
     };
 
     // Open delete confirmation dialog

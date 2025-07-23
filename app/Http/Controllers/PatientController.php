@@ -64,7 +64,11 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-        //
+        return Inertia::render('Admin/Pasien/Edit', [
+            'patient' => $patient,
+            'doctors' => Doctor::all(),
+            'rooms' => Room::all()
+        ]);
     }
 
     /**
@@ -72,7 +76,18 @@ class PatientController extends Controller
      */
     public function update(Request $request, Patient $patient)
     {
-        //
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'nik' => 'required|string|max:16',
+            'phone' => 'required|string|max:16',
+            'alamat' => 'required|string|max:255',
+            'doctors_id' => 'required|exists:doctors,id',
+            'rooms_id' => 'required|exists:rooms,id',
+            'jenis_kelamin' => 'required',
+        ]);
+
+        $patient->update($validated);
+        return redirect()->route('patient.index')->with('success', 'Data Pasien Berhasil Diupdate');
     }
 
     /**
