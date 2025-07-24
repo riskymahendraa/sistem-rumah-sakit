@@ -56,7 +56,11 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        //
+        return Inertia::render('Admin/Pasien/Show', [
+            'patient' => $patient,
+            'doctor' => $patient->doctor,
+            'room' => $patient->room
+        ]);
     }
 
     /**
