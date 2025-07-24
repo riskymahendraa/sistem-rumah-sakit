@@ -9,11 +9,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Button from "@mui/material/Button";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import { router } from "@inertiajs/react";
 import { useForm } from "@inertiajs/react";
 import { Head } from "@inertiajs/react";
+import InputAdornment from "@mui/material/InputAdornment";
+import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
 import {
     Dialog,
     DialogTitle,
@@ -167,6 +167,21 @@ export default function Create({ doctors, rooms }) {
                             <Box sx={{ mb: 2 }}>
                                 <TextField
                                     label="Pilih Dokter"
+                                    disabled
+                                    sx={{
+                                        "& .MuiOutlinedInput-root": {
+                                            "& fieldset": {
+                                                borderColor: "primary.main", // border biru
+                                            },
+                                            "&:hover fieldset": {
+                                                borderColor: "primary.dark",
+                                            },
+                                        },
+                                        "& .MuiInputBase-input.Mui-disabled": {
+                                            color: "black", // ✅ warna teks value
+                                            WebkitTextFillColor: "black", // ✅ penting untuk Chrome/Safari
+                                        },
+                                    }}
                                     value={
                                         selectedDoctor
                                             ? selectedDoctor.nama
@@ -177,6 +192,12 @@ export default function Create({ doctors, rooms }) {
                                     inputRef={inputRef}
                                     InputProps={{
                                         readOnly: true,
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <ArrowDropDown />
+                                            </InputAdornment>
+                                        ),
+                                        style: { cursor: "pointer" },
                                     }}
                                 />
                             </Box>
@@ -259,6 +280,21 @@ export default function Create({ doctors, rooms }) {
                             <Box sx={{ mb: 2 }}>
                                 <TextField
                                     label="Pilih Kamar"
+                                    disabled
+                                    sx={{
+                                        "& .MuiOutlinedInput-root": {
+                                            "& fieldset": {
+                                                borderColor: "primary.main",
+                                            },
+                                            "&:hover fieldset": {
+                                                borderColor: "primary.dark",
+                                            },
+                                        },
+                                        "& .MuiInputBase-input.Mui-disabled": {
+                                            color: "black",
+                                            WebkitTextFillColor: "black",
+                                        },
+                                    }}
                                     value={
                                         selectedRoom ? selectedRoom.name : ""
                                     }
@@ -267,6 +303,12 @@ export default function Create({ doctors, rooms }) {
                                     inputRef={inputRef}
                                     InputProps={{
                                         readOnly: true,
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <ArrowDropDown />
+                                            </InputAdornment>
+                                        ),
+                                        style: { cursor: "pointer" },
                                     }}
                                 />
                             </Box>
