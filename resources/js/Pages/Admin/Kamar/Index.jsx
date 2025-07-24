@@ -111,7 +111,7 @@ export default function Index() {
                     });
                     setSnackbar({
                         open: true,
-                        message: "Data dokter berhasil dihapus",
+                        message: "Data kamar berhasil dihapus",
                         severity: "success",
                     });
                 },
@@ -119,7 +119,7 @@ export default function Index() {
                     setDeleteDialog((prev) => ({ ...prev, loading: false }));
                     setSnackbar({
                         open: true,
-                        message: "Gagal menghapus data dokter",
+                        message: "Gagal menghapus data kamar",
                         severity: "error",
                     });
                 },
@@ -267,7 +267,7 @@ export default function Index() {
                     <DialogTitle>Konfirmasi Hapus Data</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Apakah Anda yakin ingin menghapus data dokter{" "}
+                            Apakah Anda yakin ingin menghapus data kamar{" "}
                             <strong>{deleteDialog.roomName}</strong>?
                             <br />
                             <span className="text-red-600">

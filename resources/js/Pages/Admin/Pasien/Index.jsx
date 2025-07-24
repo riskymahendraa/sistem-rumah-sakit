@@ -29,8 +29,8 @@ export default function Index() {
     // State untuk delete confirmation
     const [deleteDialog, setDeleteDialog] = useState({
         open: false,
-        doctorId: null,
-        doctorName: null,
+        patientId: null,
+        patientName: null,
         loading: false,
     });
 
@@ -75,8 +75,8 @@ export default function Index() {
     const handleDeleteClick = (row) => {
         setDeleteDialog({
             open: true,
-            doctorId: row.id,
-            doctorName: row.fullName,
+            patientId: row.id,
+            patientName: row.fullName,
             loading: false,
         });
     };
@@ -86,8 +86,8 @@ export default function Index() {
         if (!deleteDialog.loading) {
             setDeleteDialog({
                 open: false,
-                doctorId: null,
-                doctorName: null,
+                patientId: null,
+                patientName: null,
                 loading: false,
             });
         }
@@ -97,7 +97,7 @@ export default function Index() {
     const handleDeleteConfirm = () => {
         setDeleteDialog((prev) => ({ ...prev, loading: true }));
         router.post(
-            route("doctor.destroy", deleteDialog.doctorId),
+            route("patient.destroy", deleteDialog.patientId),
             {
                 _method: "DELETE",
             },
@@ -105,13 +105,13 @@ export default function Index() {
                 onSuccess: () => {
                     setDeleteDialog({
                         open: false,
-                        doctorId: null,
-                        doctorName: null,
+                        patientId: null,
+                        patientName: null,
                         loading: false,
                     });
                     setSnackbar({
                         open: true,
-                        message: "Data dokter berhasil dihapus",
+                        message: "Data Pasien Berhasil Dihapus",
                         severity: "success",
                     });
                 },
@@ -119,7 +119,7 @@ export default function Index() {
                     setDeleteDialog((prev) => ({ ...prev, loading: false }));
                     setSnackbar({
                         open: true,
-                        message: "Gagal menghapus data dokter",
+                        message: "Gagal Menghapus Data Pasien",
                         severity: "error",
                     });
                 },
@@ -252,8 +252,8 @@ export default function Index() {
                     <DialogTitle>Konfirmasi Hapus Data</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Apakah Anda yakin ingin menghapus data dokter{" "}
-                            <strong>{deleteDialog.doctorName}</strong>?
+                            Apakah Anda yakin ingin menghapus data pasien{" "}
+                            <strong>{deleteDialog.patientName}</strong>?
                             <br />
                             <span className="text-red-600">
                                 Aksi ini tidak dapat dibatalkan.
