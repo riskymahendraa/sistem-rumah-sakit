@@ -9,7 +9,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { usePage, router, Head } from "@inertiajs/react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import SearchIcon from "@mui/icons-material/Search";
 import {
     Dialog,
     DialogTitle,
@@ -23,10 +22,12 @@ import {
 } from "@mui/material";
 
 export default function Index() {
-    const { flash } = usePage().props;
+    const { flash, patients } = usePage().props;
     const [message, setMessage] = useState(flash.success || null);
     const [errorMessage, setErrorMessage] = useState(flash.error || null);
-    const { patients } = usePage().props;
+
+    // State untuk search input
+    const [searchTerm, setSearchTerm] = useState("");
 
     // State untuk delete confirmation
     const [deleteDialog, setDeleteDialog] = useState({
@@ -212,6 +213,12 @@ export default function Index() {
         roomName: patient.room?.name || "-",
     }));
 
+    const filteredRows = rows.filter(
+        (row) =>
+            row.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            row.nik?.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
     return (
         <DashboardLayout>
             <Head title="Data Pasien" />
@@ -225,15 +232,16 @@ export default function Index() {
                     >
                         Tambah Data Pasien <AddIcon />
                     </button>
-                    <div className="relative w-64">
-                        <SearchInput placeholder="Cari pasien..." />
-                        {/* SearchInput component handles the search input */}
-                    </div>
+                    <SearchInput
+                        placeholder="Cari pasien..."
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    {/* SearchInput component handles the search input */}
                 </div>
 
                 <Paper sx={{ width: "100%" }}>
                     <DataGrid
-                        rows={rows}
+                        rows={filteredRows}
                         columns={columns}
                         paginationModel={paginationModel}
                         onPaginationModelChange={setPaginationModel}
