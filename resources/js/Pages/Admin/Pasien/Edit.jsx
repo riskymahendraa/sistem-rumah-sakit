@@ -302,15 +302,15 @@ export default function Edit({ patient, doctors, rooms }) {
                                     sx={{
                                         "& .MuiOutlinedInput-root": {
                                             "& fieldset": {
-                                                borderColor: "primary.main", // border biru
+                                                borderColor: "primary.main",
                                             },
                                             "&:hover fieldset": {
                                                 borderColor: "primary.dark",
                                             },
                                         },
                                         "& .MuiInputBase-input.Mui-disabled": {
-                                            color: "black", // ✅ warna teks value
-                                            WebkitTextFillColor: "black", // ✅ penting untuk Chrome/Safari
+                                            color: "black",
+                                            WebkitTextFillColor: "black",
                                         },
                                     }}
                                     value={

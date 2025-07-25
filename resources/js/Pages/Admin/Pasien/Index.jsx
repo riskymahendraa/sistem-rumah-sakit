@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import SearchInput from "@/Components/SearchInput";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import Box from "@mui/material/Box";
 import AddIcon from "@mui/icons-material/Add";
@@ -8,6 +9,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { usePage, router, Head } from "@inertiajs/react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import SearchIcon from "@mui/icons-material/Search";
 import {
     Dialog,
     DialogTitle,
@@ -223,11 +225,10 @@ export default function Index() {
                     >
                         Tambah Data Pasien <AddIcon />
                     </button>
-                    <input
-                        type="text"
-                        placeholder="Cari pasien..."
-                        className="border border-gray-300 rounded-md px-4 py-2"
-                    />
+                    <div className="relative w-64">
+                        <SearchInput placeholder="Cari pasien..." />
+                        {/* SearchInput component handles the search input */}
+                    </div>
                 </div>
 
                 <Paper sx={{ width: "100%" }}>
