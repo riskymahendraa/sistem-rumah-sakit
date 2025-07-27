@@ -6,16 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\DashboardController;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Admin/Dashboard', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
 
 // route CRUD doctor
 // route::resource('doctor', DoctorController::class);
