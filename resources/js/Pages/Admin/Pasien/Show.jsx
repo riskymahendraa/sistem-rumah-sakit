@@ -9,9 +9,9 @@ export default function Show() {
     const { patient, doctor, room } = usePage().props;
     const { url } = usePage();
     const from = new URLSearchParams(url.split("?")[1]).get("from");
+    const roomId = new URLSearchParams(url.split("?")[1]).get("roomId");
     const backUrl =
-        from === "room" ? route("room.index") : route("patient.index");
-
+        from === "room" ? route("room.show", roomId) : route("patient.index");
     return (
         <div>
             <DashboardLayout>

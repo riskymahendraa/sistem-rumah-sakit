@@ -10,7 +10,9 @@ import Paper from "@mui/material/Paper";
 export default function Show() {
     const { room, patientList } = usePage().props;
     const handleShow = (row) => {
-        router.visit(route("patient.show", row.id) + "?from=room");
+        router.visit(
+            route("patient.show", row.id) + "?from=room&roomId=" + room.id,
+        );
     };
     const [paginationModel, setPaginationModel] = useState({
         page: 0,
