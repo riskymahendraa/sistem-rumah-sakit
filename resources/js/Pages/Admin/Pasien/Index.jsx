@@ -71,7 +71,7 @@ export default function Index() {
     };
 
     const handleShow = (row) => {
-        router.visit(route("patient.show", row.id));
+        router.visit(route("patient.show", row.id) + "from=patient");
     };
 
     // Open delete confirmation dialog

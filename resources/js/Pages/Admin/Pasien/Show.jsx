@@ -7,6 +7,10 @@ import { Box, Button } from "@mui/material";
 
 export default function Show() {
     const { patient, doctor, room } = usePage().props;
+    const { url } = usePage();
+    const from = new URLSearchParams(url.split("?")[1]).get("from");
+    const backUrl =
+        from === "room" ? route("room.index") : route("patient.index");
 
     return (
         <div>
@@ -70,9 +74,7 @@ export default function Show() {
                     <div className="flex justify-end">
                         <div className="hover:scale-105 transition ease-in duration-300">
                             <Button
-                                onClick={() =>
-                                    router.visit(route("patient.index"))
-                                }
+                                onClick={() => router.visit(backUrl)}
                                 variant="contained"
                             >
                                 Kembali
