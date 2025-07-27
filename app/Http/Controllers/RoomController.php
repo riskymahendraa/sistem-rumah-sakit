@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Doctor;
 use App\Models\Room;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -51,8 +52,10 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
+        $patient = Patient::with('doctor')->where('rooms_id', $room->id)->get();
         return Inertia::render('Admin/Kamar/Show', [
-            'room' => $room
+            'room' => $room,
+            'patientList' => $patient,
         ]);
     }
 
