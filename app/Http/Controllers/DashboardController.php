@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Doctor;
+use App\Models\Patient;
 
 use Illuminate\Http\Request;
 
@@ -16,6 +17,7 @@ class DashboardController extends Controller
                 'user' => Auth::user(),
             ],
             'totalDoctors' => Doctor::count(),
+            'totalPatients' => Patient::count(),
         ]);
     }
 }

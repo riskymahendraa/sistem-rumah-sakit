@@ -6,11 +6,11 @@ import {
     IconButton,
     Tooltip,
 } from "@mui/material";
-import PeopleIcon from "@mui/icons-material/People";
+import AccessibleIcon from "@mui/icons-material/Accessible";
 import CallMadeIcon from "@mui/icons-material/CallMade";
 import { router } from "@inertiajs/react";
 
-const TotalDoctorsWidget = ({ total }) => {
+const TotalPatientWidget = ({ total }) => {
     return (
         <Card
             sx={{
@@ -31,7 +31,7 @@ const TotalDoctorsWidget = ({ total }) => {
                         padding: 2,
                     }}
                 >
-                    <PeopleIcon sx={{ color: "#fff", fontSize: 50 }} />
+                    <AccessibleIcon sx={{ color: "#fff", fontSize: 50 }} />
                 </Box>
 
                 <Box display="flex" flexDirection="column" gap={2}>
@@ -40,13 +40,13 @@ const TotalDoctorsWidget = ({ total }) => {
                         justifyContent="space-between"
                         alignItems="flex-start"
                     >
-                        <Box></Box> {/* Kosong karena icon sudah absolute */}
+                        <Box></Box>
                         <Box textAlign="right">
                             <Typography
                                 variant="subtitle2"
                                 color="text.secondary"
                             >
-                                Jumlah Dokter
+                                Jumlah Pasien
                             </Typography>
                             <Typography variant="h6" fontWeight="bold">
                                 {total}
@@ -55,9 +55,9 @@ const TotalDoctorsWidget = ({ total }) => {
                     </Box>
 
                     <Box display="flex" justifyContent="flex-end">
-                        <Tooltip title="Lihat Data Dokter">
+                        <Tooltip title="Lihat Data Pasien">
                             <IconButton
-                                onClick={() => router.visit("/doctor")}
+                                onClick={() => router.visit("/patient")}
                                 size="small"
                                 sx={{
                                     border: "1px solid #e5e7eb",
@@ -81,4 +81,4 @@ const TotalDoctorsWidget = ({ total }) => {
     );
 };
 
-export default TotalDoctorsWidget;
+export default TotalPatientWidget;
