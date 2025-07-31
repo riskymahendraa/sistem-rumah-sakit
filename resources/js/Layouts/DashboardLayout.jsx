@@ -2,7 +2,6 @@ import * as React from "react";
 import {
     AppBar,
     Box,
-    Button,
     CssBaseline,
     Divider,
     Drawer,
@@ -14,11 +13,11 @@ import {
     Toolbar,
     Typography,
 } from "@mui/material";
+import HotelIcon from "@mui/icons-material/Hotel";
 import MenuIcon from "@mui/icons-material/Menu";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PeopleIcon from "@mui/icons-material/People";
 import AccessibleIcon from "@mui/icons-material/Accessible";
-import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { router, usePage } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
@@ -44,7 +43,7 @@ const NAVIGATION = [
     },
     {
         title: "Data Kamar",
-        icon: <MeetingRoomIcon />,
+        icon: <HotelIcon />,
         path: "/room",
     },
 ];
