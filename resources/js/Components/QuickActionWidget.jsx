@@ -4,7 +4,7 @@ import AccessibleIcon from "@mui/icons-material/Accessible";
 import HotelIcon from "@mui/icons-material/Hotel";
 import { router } from "@inertiajs/react";
 
-const QuickActionWidget = ({ total }) => {
+const QuickActionWidget = () => {
     return (
         <Card
             sx={{

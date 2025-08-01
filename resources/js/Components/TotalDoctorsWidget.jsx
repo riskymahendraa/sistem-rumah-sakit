@@ -24,7 +24,7 @@ const TotalDoctorsWidget = ({ total }) => {
                 <Box
                     sx={{
                         position: "absolute",
-                        top: -20,
+                        top: -10,
                         left: 20,
                         backgroundColor: "primary.main",
                         borderRadius: 4,

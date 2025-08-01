@@ -27,6 +27,7 @@
         "@emotion/styled": "^11.14.0",
         "@mui/icons-material": "^7.1.1",
         "@mui/material": "^7.1.1",
-        "@toolpad/core": "^0.16.0"
+        "@toolpad/core": "^0.16.0",
+        "react-minimal-pie-chart": "^9.1.1"
     }
 }
