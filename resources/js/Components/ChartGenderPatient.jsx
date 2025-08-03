@@ -2,10 +2,19 @@ import { PieChart } from "react-minimal-pie-chart";
 import { Card, CardContent, Typography, Box, Tooltip } from "@mui/material";
 import { useState } from "react";
 
-const ChartGenderPatient = () => {
+const ChartGenderPatient = ({ genderStats }) => {
+    const total = genderStats.maleCount + genderStats.femaleCount;
     const data = [
-        { title: "Laki-laki", value: 70, color: "#3B82F6" },
-        { title: "Perempuan", value: 30, color: "#EC4899" },
+        {
+            title: "Laki-laki",
+            value: genderStats.maleCount,
+            color: "#3B82F6",
+        },
+        {
+            title: "Perempuan",
+            value: genderStats.femaleCount,
+            color: "#EC4899",
+        },
     ];
 
     const [hovered, setHovered] = useState(undefined);
@@ -67,7 +76,7 @@ const ChartGenderPatient = () => {
 
                         {hovered !== undefined && (
                             <Tooltip
-                                title={`${data[hovered].title}: ${data[hovered].value}%`}
+                                title={`${data[hovered].title}: ${Math.round((data[hovered].value / total) * 100)}%`}
                                 placement="top"
                                 open
                                 arrow
