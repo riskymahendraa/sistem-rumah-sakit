@@ -41,7 +41,7 @@ const ChartGenderPatient = ({ genderStats }) => {
                     <div
                         className="w-full rounded-xl hover:cursor-pointer hover:scale-105 transition-all duration-200"
                         style={{
-                            height: "250px",
+                            height: "225px",
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
@@ -52,6 +52,7 @@ const ChartGenderPatient = ({ genderStats }) => {
                             className=""
                             data={data}
                             radius={45}
+                            startAngle={90}
                             label={({ dataEntry }) =>
                                 `${dataEntry.title} ${Math.round(dataEntry.percentage)}%`
                             }
@@ -60,7 +61,7 @@ const ChartGenderPatient = ({ genderStats }) => {
                                 fill: "#fff",
                                 pointerEvents: "none",
                             }}
-                            labelPosition={60}
+                            labelPosition={50}
                             animate
                             segmentsStyle={(index) => ({
                                 transition: "all 0.3s ease",
