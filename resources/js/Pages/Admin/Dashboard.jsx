@@ -39,11 +39,12 @@ export default function Dashboard() {
             (r) => (r.class || "").trim().toUpperCase() === cls,
         );
 
-        const occupied = groupedRooms.reduce((sum, r) => sum + r.bed_count, 0);
-        const total = groupedRooms.reduce(
+        const total = groupedRooms.reduce((sum, r) => sum + r.bed_count, 0);
+        const available = groupedRooms.reduce(
             (sum, r) => sum + r.available_beds,
             0,
         );
+        const occupied = total - available;
 
         return {
             class: cls,

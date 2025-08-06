@@ -13,7 +13,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-            $rooms = Room::select('class', 'bed_count', 'available_beds')->get();            $totalDoctors = Doctor::count();
+            $rooms = Room::withCount('patients')->select('id', 'class', 'bed_count', 'available_beds')->get();
+            $totalDoctors = Doctor::count();
             $totalPatients = Patient::count();
             $maleCount = Patient::where('jenis_kelamin', 'Laki-laki')->count();
             $femaleCount = Patient::where('jenis_kelamin', 'Perempuan')->count();
