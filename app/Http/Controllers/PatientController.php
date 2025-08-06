@@ -104,17 +104,43 @@ class PatientController extends Controller
     public function update(Request $request, Patient $patient)
     {
         $validated = $request->validate([
-            'nama' => 'required|string|max:255',
-            'nik' => 'required|string|max:16',
-            'phone' => 'required|string|max:16',
-            'alamat' => 'required|string|max:255',
-            'doctors_id' => 'required|exists:doctors,id',
-            'rooms_id' => 'required|exists:rooms,id',
-            'jenis_kelamin' => 'required',
-        ]);
+        'nama' => 'required|string|max:255',
+        'nik' => 'required|string|max:16',
+        'phone' => 'required|string|max:16',
+        'alamat' => 'required|string|max:255',
+        'doctors_id' => 'required|exists:doctors,id',
+        'rooms_id' => 'required|exists:rooms,id',
+        'jenis_kelamin' => 'required',
+    ]);
 
+    DB::transaction(function () use ($validated, $patient) {
+        // Cek apakah pasien pindah kamar
+        if ($patient->rooms_id !== $validated['rooms_id']) {
+            // Kamar lama: tambah 1 bed
+            $oldRoom = Room::find($patient->rooms_id);
+            if ($oldRoom) {
+                $oldRoom->available_beds++;
+                $oldRoom->save();
+            }
+
+            // Kamar baru: kurangi 1 bed
+            $newRoom = Room::where('id', $validated['rooms_id'])->lockForUpdate()->first();
+
+            if ($newRoom->available_beds <= 0) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'rooms_id' => 'Kamar yang dipilih sudah penuh.',
+                ]);
+            }
+
+            $newRoom->available_beds--;
+            $newRoom->save();
+        }
+
+        // Update data pasien
         $patient->update($validated);
-        return redirect()->route('patient.index')->with('success', 'Data Pasien Berhasil Diupdate');
+    });
+
+    return redirect()->route('patient.index')->with('success', 'Data Pasien Berhasil Diupdate');
     }
 
     /**
