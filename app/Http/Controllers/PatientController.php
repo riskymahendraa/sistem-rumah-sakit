@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use App\Models\Patient;
 use App\Models\Doctor;
 use App\Models\Room;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -47,8 +48,30 @@ class PatientController extends Controller
             'jenis_kelamin' => 'required',
         ]);
         
+        DB::beginTransaction();
+
+    try {
+        // Kunci data kamar agar tidak bentrok
+        $room = Room::lockForUpdate()->findOrFail($request->rooms_id);
+
+        if ($room->available_beds <= 0) {
+            return redirect()->back()->withErrors(['rooms_id' => 'Kamar tidak tersedia']);
+        }
+
+        // Kurangi bed count
+        $room->decrement('available_beds');
+
+        // Tambah pasien
         Patient::create($validated);
+
+        DB::commit(); // Komit transaksi setelah semuanya berhasil
+
         return redirect()->route('patient.index')->with('success', 'Data Pasien Berhasil Ditambahkan');
+    } catch (\Exception $e) {
+        DB::rollBack(); // Batalkan semua perubahan jika ada error
+
+        return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan data pasien.']);
+    }
     }
 
     /**
@@ -99,7 +122,14 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        $patient->delete();
+        DB::transaction(function () use ($patient) {
+            $room = Room::lockForUpdate()->findOrFail($patient->rooms_id);
+            if ($room) {
+                $room->increment('available_beds');
+                $room->save();
+            }  
+            $patient->delete();
+        });
         return redirect()->route('patient.index');
     }
 }

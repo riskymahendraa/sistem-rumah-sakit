@@ -146,13 +146,13 @@ export default function Index() {
             flex: 1,
         },
         {
-            field: "bed_count",
-            headerName: "Kapasitas Kamar",
+            field: "available_beds",
+            headerName: "Kamar Tersedia",
             flex: 1,
         },
         {
-            field: "available_beds",
-            headerName: "Kamar Tersedia",
+            field: "bed_count",
+            headerName: "Kapasitas Kamar",
             flex: 1,
         },
         {

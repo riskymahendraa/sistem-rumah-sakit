@@ -16,7 +16,7 @@ const RoomItemCard = ({
     color = "primary",
     onClick,
 }) => {
-    const percentage = (occupied / total) * 100;
+    const percentage = (total / occupied) * 100;
 
     return (
         <Card
@@ -60,7 +60,7 @@ const RoomItemCard = ({
                             <Typography fontWeight={600}>{name}</Typography>
                             <Typography variant="body2" color="text.secondary">
                                 <strong>
-                                    {occupied}/{total}
+                                    {total}/{occupied}
                                 </strong>{" "}
                                 terisi
                             </Typography>
