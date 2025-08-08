@@ -1,12 +1,58 @@
-import React from "react";
+import { React, useState } from "react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import { router } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 import { Head } from "@inertiajs/react";
 import { Box, Button } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import { DataGrid } from "@mui/x-data-grid";
 
 export default function Show() {
-    const { doctor } = usePage().props;
+    const { doctor, patient } = usePage().props;
+
+    const [paginationModel, setPaginationModel] = useState({
+        page: 0,
+        pageSize: 5,
+    });
+
+    const columns = [
+        { field: "no", headerName: "NO", flex: 1 },
+        { field: "nik", headerName: "NIK", flex: 1 },
+        {
+            field: "fullName",
+            headerName: "Nama Lengkap",
+            flex: 1,
+        },
+        {
+            field: "address",
+            headerName: "Alamat",
+            flex: 1,
+        },
+        {
+            field: "doctorName",
+            headerName: "Dokter",
+            flex: 1,
+            align: "left",
+            headerAlign: "left",
+        },
+        {
+            field: "roomName",
+            headerName: "Kamar",
+            flex: 1,
+            align: "left",
+            headerAlign: "left",
+        },
+    ];
+
+    const rows = patient.map((patient, index) => ({
+        id: patient.id,
+        no: index + 1,
+        fullName: patient.nama,
+        nik: patient.nik,
+        address: patient.alamat,
+        doctorName: patient.doctor?.nama || "-",
+        roomName: patient.room?.name || "-",
+    }));
 
     return (
         <div>
@@ -63,6 +109,22 @@ export default function Show() {
                             </div>
                         </div>
                     </div>
+                    <Box className=" max-w-full mx-auto px-4 py-6">
+                        <div className="font-bold text-xl mb-4">
+                            Daftar Pasien untuk Dokter {doctor.nama}
+                        </div>
+                        <Paper sx={{ width: "100%" }}>
+                            <DataGrid
+                                rows={rows}
+                                columns={columns}
+                                paginationModel={paginationModel}
+                                onPaginationModelChange={setPaginationModel}
+                                pageSizeOptions={[5, 10]}
+                                autoHeight
+                                sx={{ border: 0 }}
+                            />
+                        </Paper>
+                    </Box>
                     <div className="flex justify-end">
                         <div className="hover:scale-105 transition ease-in duration-300">
                             <Button

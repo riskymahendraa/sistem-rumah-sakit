@@ -247,7 +247,7 @@ export default function Create({ doctors, rooms }) {
                                                                 <strong>
                                                                     No HP:
                                                                 </strong>{" "}
-                                                                {doctor.no_hp}
+                                                                {doctor.phone}
                                                             </Typography>
                                                         </>
                                                     }

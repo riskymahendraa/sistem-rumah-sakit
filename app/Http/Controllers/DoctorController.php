@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Doctor;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
@@ -51,8 +52,11 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
+        // $room = Room::with('patients_id')->where('doctors_id', $doctor->id)->get();
+        $patient = Patient::with(['room', 'doctor'])->where('doctors_id', $doctor->id)->get();
         return Inertia::render('Admin/Dokter/Show', [
-            'doctor' => $doctor
+            'doctor' => $doctor,
+            'patient' => $patient,
         ]);
     }
 
@@ -62,7 +66,7 @@ class DoctorController extends Controller
     public function edit(Doctor $doctor)
     {
         return Inertia::render('Admin/Dokter/Edit', [
-            'doctor' => $doctor
+            'doctor' => $doctor,
         ]);
     }
 
