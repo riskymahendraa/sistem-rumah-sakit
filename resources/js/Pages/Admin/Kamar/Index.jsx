@@ -227,7 +227,7 @@ export default function Index() {
         type: room.type,
         bed_count: room.bed_count,
         class: room.class,
-        status: room.status,
+        status: room.available_beds === 0 ? "Tidak Tersedia" : "Tersedia",
         available_beds: room.available_beds,
     }));
 
