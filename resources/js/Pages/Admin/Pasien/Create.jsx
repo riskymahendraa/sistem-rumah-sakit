@@ -354,7 +354,7 @@ export default function Create({ doctors, rooms }) {
                                                                 variant="body2"
                                                             >
                                                                 <strong>
-                                                                    Kapsitas
+                                                                    Kapasitas
                                                                     Tersedia:
                                                                 </strong>{" "}
                                                                 {
@@ -371,8 +371,14 @@ export default function Create({ doctors, rooms }) {
                                                     onClick={() =>
                                                         handleSelectRoom(room)
                                                     }
+                                                    disabled={
+                                                        room.available_beds ===
+                                                        0
+                                                    }
                                                 >
-                                                    Pilih
+                                                    {room.available_beds === 0
+                                                        ? "Full"
+                                                        : "Pilih"}
                                                 </Button>
                                             </ListItem>
                                         ))}
