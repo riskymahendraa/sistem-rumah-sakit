@@ -48,6 +48,11 @@ const NAVIGATION = [
     },
 ];
 
+const handleLogout = (e) => {
+    e.preventDefault();
+    router.post(route("logout"));
+};
+
 const theme = createTheme();
 
 export default function DashboardLayout({ children }) {
@@ -87,7 +92,7 @@ export default function DashboardLayout({ children }) {
                         <div className="flex items-center gap-5">
                             <div>Hello, Admin</div>
                             <button
-                                onClick={() => router.post("/logout")}
+                                onClick={handleLogout}
                                 className="text-white-600 font-semibold px-2 py-1 text-sm rounded-full hover:bg-red-200 hover:text-red-500 transition-all ease-in-out duration-300"
                             >
                                 <LogoutIcon /> Logout
