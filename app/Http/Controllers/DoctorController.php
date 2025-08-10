@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Doctor;
 use App\Models\Patient;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
@@ -14,6 +15,9 @@ class DoctorController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Dokter/Index', [
+            'auth' => [
+                'user' => Auth::user(),
+            ],
             'doctors' => Doctor::all(), // atau sesuai kebutuhan
             'success' => session('success') // untuk menampilkan pesan sukses
         ]);
@@ -24,7 +28,11 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Dokter/Create');
+        return Inertia::render('Admin/Dokter/Create',[
+            'auth' => [
+                'user' => Auth::user(),
+            ],
+        ]);
     }
 
     /**
@@ -55,6 +63,9 @@ class DoctorController extends Controller
         // $room = Room::with('patients_id')->where('doctors_id', $doctor->id)->get();
         $patient = Patient::with(['room', 'doctor'])->where('doctors_id', $doctor->id)->get();
         return Inertia::render('Admin/Dokter/Show', [
+            'auth' => [
+                'user' => Auth::user(),
+            ],
             'doctor' => $doctor,
             'patient' => $patient,
         ]);
@@ -66,6 +77,9 @@ class DoctorController extends Controller
     public function edit(Doctor $doctor)
     {
         return Inertia::render('Admin/Dokter/Edit', [
+            'auth' => [
+                'user' => Auth::user(),
+            ],
             'doctor' => $doctor,
         ]);
     }

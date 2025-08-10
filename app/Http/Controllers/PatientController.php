@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Patient;
 use App\Models\Doctor;
@@ -17,6 +18,9 @@ class PatientController extends Controller
     {
         $patients = Patient::with('doctor', 'room')->get();
         return Inertia::render('Admin/Pasien/Index', [
+            'auth' => [
+                'user' => Auth::user(),
+            ],
             'patients' => $patients,// atau sesuai kebutuhan
             'success' => session('success') // untuk menampilkan pesan sukses
         ]);
@@ -28,6 +32,9 @@ class PatientController extends Controller
     public function create()
     {
         return Inertia::render('Admin/Pasien/Create', [
+            'auth' => [
+                'user' => Auth::user(),
+            ],
             'doctors' => Doctor::all(), 
             'rooms' => Room::all()
         ]);
@@ -80,6 +87,9 @@ class PatientController extends Controller
     public function show(Patient $patient)
     {
         return Inertia::render('Admin/Pasien/Show', [
+            'auth' => [
+                'user' => Auth::user(),
+            ],
             'patient' => $patient,
             'doctor' => $patient->doctor,
             'room' => $patient->room
@@ -92,6 +102,9 @@ class PatientController extends Controller
     public function edit(Patient $patient)
     {
         return Inertia::render('Admin/Pasien/Edit', [
+            'auth' => [
+                'user' => Auth::user(),
+            ],
             'patient' => $patient,
             'doctors' => Doctor::all(),
             'rooms' => Room::all()
@@ -114,9 +127,7 @@ class PatientController extends Controller
     ]);
 
     DB::transaction(function () use ($validated, $patient) {
-        // Cek apakah pasien pindah kamar
         if ($patient->rooms_id !== $validated['rooms_id']) {
-            // Kamar lama: tambah 1 bed
             $oldRoom = Room::find($patient->rooms_id);
             if ($oldRoom) {
                 $oldRoom->available_beds++;

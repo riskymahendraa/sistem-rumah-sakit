@@ -57,6 +57,8 @@ const theme = createTheme();
 
 export default function DashboardLayout({ children }) {
     const currentPath = usePage().url; // ← ini penting
+    const { auth } = usePage().props;
+    const userName = auth?.user?.name ?? "Guest";
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -90,7 +92,7 @@ export default function DashboardLayout({ children }) {
                             </Typography>
                         </div>
                         <div className="flex items-center gap-5">
-                            <div>{usePage().props.auth.user.name}</div>
+                            <div>{userName}</div>
                             <button
                                 onClick={handleLogout}
                                 className="text-white-600 font-semibold px-2 py-1 text-sm rounded-full hover:bg-red-200 hover:text-red-500 transition-all ease-in-out duration-300"

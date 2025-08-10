@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Doctor;
 use App\Models\Room;
@@ -15,6 +16,9 @@ class RoomController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Kamar/Index', [
+            'auth' => [
+                'user' => Auth::user(),
+            ],
             'rooms' => Room::all(), // atau sesuai kebutuhan
             'success' => session('success') // untuk menampilkan pesan sukses
         ]);
@@ -25,7 +29,11 @@ class RoomController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Kamar/Create');
+        return Inertia::render('Admin/Kamar/Create' ,[
+            'auth' => [
+                'user' => Auth::user(),
+            ]
+        ]);
     }
 
     /**
@@ -54,6 +62,9 @@ class RoomController extends Controller
     {
         $patient = Patient::with('doctor')->where('rooms_id', $room->id)->get();
         return Inertia::render('Admin/Kamar/Show', [
+            'auth' => [
+                'user' => Auth::user(),
+            ],
             'room' => $room,
             'patientList' => $patient,
         ]);
@@ -65,6 +76,9 @@ class RoomController extends Controller
     public function edit(Room $room)
     {
         return Inertia::render('Admin/Kamar/Edit', [
+            'auth' => [
+                'user' => Auth::user(),
+            ],
             'room' => $room
         ]);
     }
