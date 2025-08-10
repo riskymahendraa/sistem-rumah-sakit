@@ -90,7 +90,7 @@ export default function DashboardLayout({ children }) {
                             </Typography>
                         </div>
                         <div className="flex items-center gap-5">
-                            <div>Hello, Admin</div>
+                            <div>{usePage().props.auth.user.name}</div>
                             <button
                                 onClick={handleLogout}
                                 className="text-white-600 font-semibold px-2 py-1 text-sm rounded-full hover:bg-red-200 hover:text-red-500 transition-all ease-in-out duration-300"
